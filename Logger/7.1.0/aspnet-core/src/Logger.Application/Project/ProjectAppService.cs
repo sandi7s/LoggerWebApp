@@ -19,7 +19,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Logger.Project
 {
-    [AbpAuthorize(PermissionNames.Pages_Tenants)]
+    [AbpAuthorize(PermissionNames.Pages_Projects)]
     public class ProjectAppService : AsyncCrudAppService<Project, ProjectDto, int, PagedProjectResultRequestDto, CreateProjectDto, ProjectDto>, IProjectAppService
     {
         //private readonly IAbpZeroDbMigrator _abpZeroDbMigrator;
