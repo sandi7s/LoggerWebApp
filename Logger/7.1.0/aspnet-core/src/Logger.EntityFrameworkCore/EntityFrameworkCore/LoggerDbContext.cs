@@ -9,7 +9,8 @@ namespace Logger.EntityFrameworkCore
     public class LoggerDbContext : AbpZeroDbContext<Tenant, Role, User, LoggerDbContext>
     {
         /* Define a DbSet for each entity of the application */
-        
+        public virtual DbSet<Project.Project> Project { get; set; }
+
         public LoggerDbContext(DbContextOptions<LoggerDbContext> options)
             : base(options)
         {
