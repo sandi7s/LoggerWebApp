@@ -1,5 +1,5 @@
-<form class="form-horizontal" autocomplete="off" #editProjectForm="ngForm" (ngSubmit)="save()">
-    <abp-modal-header [title]="'EditProject' | localize" (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
+<form class="form-horizontal" autocomplete="off" #createProjectForm="ngForm" (ngSubmit)="save()">
+    <abp-modal-header [title]="'CreateNewProject' | localize" (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
     <div class="modal-body">
 
         
@@ -26,6 +26,6 @@
         </div>
 
     </div>
-    <abp-modal-footer [cancelDisabled]="saving" [saveDisabled]="!editProjectForm.form.valid || saving"
+    <abp-modal-footer [cancelDisabled]="saving" [saveDisabled]="!createProjectForm.form.valid || saving"
         (onCancelClick)="bsModalRef.hide()"></abp-modal-footer>
 </form>

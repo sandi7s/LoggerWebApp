@@ -6,10 +6,10 @@
                     <h1>{{ "Projects" | localize }}</h1>
                 </div>
                 <div class="col-6 text-right">
-                    <!-- <a href="javascript:;" class="btn bg-blue" (click)="createTenant()">
+                    <a href="javascript:;" class="btn bg-blue" (click)="createProject()">
                         <i class="fa fa-plus-square"></i>
                         {{ "Create" | localize }}
-                    </a> -->
+                    </a>
                 </div>
             </div>
         </div>
@@ -50,6 +50,7 @@
                             <tr>
                                 <th>{{ "Name" | localize }}</th>
                                 <th>{{ "Url" | localize }}</th>
+                                <th>{{ "Actions" | localize }}</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -67,13 +68,25 @@
                             >
                                 <td>{{ project.name }}</td>
                                 <td>{{ project.url }}</td>
+                                <td>
+                                    <button type="button" class="btn btn-sm bg-secondary"
+                                            (click)="editProject(project)">
+                                            <i class="fas fa-pencil-alt"></i>
+                                            {{ "Edit" | localize }}
+                                        </button>
+                                        <button type="button" class="btn btn-sm bg-danger mx-2"
+                                            (click)="delete(project)">
+                                            <i class="fas fa-trash"></i>
+                                            {{ "Delete" | localize }}
+                                        </button>
+                                </td>
                                 <!-- <td>
                                     <div class="custom-control custom-checkbox">
                                         <input
                                                 type="checkbox"
                                                 class="custom-control-input"
                                                 disabled
-                                                [checked]="tenant.isActive"
+                                                [checked]="project.isActive"
                                         />
                                         <label class="custom-control-label"></label>
                                     </div>
@@ -82,7 +95,7 @@
                                     <button
                                             type="button"
                                             class="btn btn-sm bg-secondary"
-                                            (click)="editTenant(tenant)"
+                                            (click)="editProject(project)"
                                     >
                                         <i class="fas fa-pencil-alt"></i>
                                         {{ "Edit" | localize }}
@@ -90,7 +103,7 @@
                                     <button
                                             type="button"
                                             class="btn btn-sm bg-danger mx-2"
-                                            (click)="delete(tenant)"
+                                            (click)="delete(project)"
                                     >
                                         <i class="fas fa-trash"></i>
                                         {{ "Delete" | localize }}

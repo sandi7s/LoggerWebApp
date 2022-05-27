@@ -11,6 +11,8 @@ import {
   ProjectDto,
   ProjectServiceProxy,
 } from '@shared/service-proxies/service-proxies';
+import { CreateProjectDialogComponent } from './create-project/create-project-dialog.component';
+import { EditProjectDialogComponent } from './edit-project/edit-project-dialog.component';
 
 class PagedProjectsRequestDto extends PagedRequestDto {
   keyword: string;
@@ -75,6 +77,40 @@ export class ProjectsComponent extends PagedListingComponentBase<ProjectDto> {
         }
       }
     );
+  }
+
+  createProject(): void {
+    this.showCreateOrEditProjectDialog();
+  }
+
+  editProject(project: ProjectDto): void {
+    this.showCreateOrEditProjectDialog(project.id);
+  }
+
+  showCreateOrEditProjectDialog(id?: number): void {
+    let createOrEditProjectDialog: BsModalRef;
+    if (!id) {
+      createOrEditProjectDialog = this._modalService.show(
+        CreateProjectDialogComponent,
+        {
+          class: 'modal-lg',
+        }
+      );
+    } else {
+      createOrEditProjectDialog = this._modalService.show(
+        EditProjectDialogComponent,
+        {
+          class: 'modal-lg',
+          initialState: {
+            id: id,
+          },
+        }
+      );
+    }
+
+    createOrEditProjectDialog.content.onSave.subscribe(() => {
+      this.refresh();
+    });
   }
 
   clearFilters(): void {

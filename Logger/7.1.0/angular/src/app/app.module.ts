@@ -17,7 +17,9 @@ import { AboutComponent } from '@app/about/about.component';
 // tenants
 import { TenantsComponent } from '@app/tenants/tenants.component';
 import { CreateTenantDialogComponent } from './tenants/create-tenant/create-tenant-dialog.component';
+import { CreateProjectDialogComponent } from './projects/create-project/create-project-dialog.component';
 import { EditTenantDialogComponent } from './tenants/edit-tenant/edit-tenant-dialog.component';
+import { EditProjectDialogComponent } from './projects/edit-project/edit-project-dialog.component';
 // roles
 import { RolesComponent } from '@app/roles/roles.component';
 import { CreateRoleDialogComponent } from './roles/create-role/create-role-dialog.component';
@@ -47,9 +49,12 @@ import { ProjectsComponent } from './projects/projects.component';
     AboutComponent,
     // tenants
     TenantsComponent,
-    ProjectsComponent,
     CreateTenantDialogComponent,
     EditTenantDialogComponent,
+    //projects
+    ProjectsComponent,
+    CreateProjectDialogComponent,
+    EditProjectDialogComponent,
     // roles
     RolesComponent,
     CreateRoleDialogComponent,
@@ -91,6 +96,9 @@ import { ProjectsComponent } from './projects/projects.component';
     // tenants
     CreateTenantDialogComponent,
     EditTenantDialogComponent,
+    //projects
+    CreateProjectDialogComponent,
+    EditProjectDialogComponent,
     // roles
     CreateRoleDialogComponent,
     EditRoleDialogComponent,
