@@ -217,16 +217,21 @@ export class LogEntryServiceProxy {
 
     /**
      * @param keyword (optional) 
+     * @param projectId (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAllPagedAndFiltered(keyword: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<LogEntryDtoPagedResultDto> {
+    getAllPagedAndFiltered(keyword: string | undefined, projectId: number | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<LogEntryDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/LogEntry/GetAllPagedAndFiltered?";
         if (keyword === null)
             throw new Error("The parameter 'keyword' cannot be null.");
         else if (keyword !== undefined)
             url_ += "Keyword=" + encodeURIComponent("" + keyword) + "&";
+        if (projectId === null)
+            throw new Error("The parameter 'projectId' cannot be null.");
+        else if (projectId !== undefined)
+            url_ += "ProjectId=" + encodeURIComponent("" + projectId) + "&";
         if (skipCount === null)
             throw new Error("The parameter 'skipCount' cannot be null.");
         else if (skipCount !== undefined)
@@ -339,16 +344,21 @@ export class LogEntryServiceProxy {
 
     /**
      * @param keyword (optional) 
+     * @param projectId (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(keyword: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<LogEntryDtoPagedResultDto> {
+    getAll(keyword: string | undefined, projectId: number | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<LogEntryDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/LogEntry/GetAll?";
         if (keyword === null)
             throw new Error("The parameter 'keyword' cannot be null.");
         else if (keyword !== undefined)
             url_ += "Keyword=" + encodeURIComponent("" + keyword) + "&";
+        if (projectId === null)
+            throw new Error("The parameter 'projectId' cannot be null.");
+        else if (projectId !== undefined)
+            url_ += "ProjectId=" + encodeURIComponent("" + projectId) + "&";
         if (skipCount === null)
             throw new Error("The parameter 'skipCount' cannot be null.");
         else if (skipCount !== undefined)

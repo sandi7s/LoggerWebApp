@@ -24,6 +24,7 @@ import { ChangePasswordComponent } from './users/change-password/change-password
                     { path: 'tenants', component: TenantsComponent, data: { permission: 'Pages.Tenants' }, canActivate: [AppRouteGuard] },
                     { path: 'projects', component: ProjectsComponent, data: { permission: 'Pages.Projects' }, canActivate: [AppRouteGuard] },
                     { path: 'logEntryes', component: LogEntryesComponent, data: { permission: 'Pages.LogEntryes' }, canActivate: [AppRouteGuard] },
+                    { path: 'logEntryes/:id', component: LogEntryesComponent, data: { permission: 'Pages.Races' } },
                     { path: 'about', component: AboutComponent, canActivate: [AppRouteGuard] },
                     { path: 'update-password', component: ChangePasswordComponent, canActivate: [AppRouteGuard] }
                 ]

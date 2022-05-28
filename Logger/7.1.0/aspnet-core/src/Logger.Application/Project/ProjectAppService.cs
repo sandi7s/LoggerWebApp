@@ -40,6 +40,7 @@ namespace Logger.Project
         {
             var projects = Repository.GetAll()
                 .WhereIf(!string.IsNullOrEmpty(input.Keyword), e => e.Name.Contains(input.Keyword) )
+                .Where(e => e.CreatorUserId == AbpSession.UserId)
                 .ToList();
 
             var projectsDtos = ObjectMapper.Map<List<ProjectDto>>(projects);

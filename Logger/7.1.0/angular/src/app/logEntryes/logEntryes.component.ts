@@ -1,4 +1,4 @@
-import { Component, Injector } from '@angular/core';
+import { Component, Injector, OnInit } from '@angular/core';
 import { finalize } from 'rxjs/operators';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
@@ -11,6 +11,7 @@ import {
   LogEntryDto,
   LogEntryServiceProxy,
 } from '@shared/service-proxies/service-proxies';
+import { ActivatedRoute, Params } from '@angular/router';
 
 class PagedLogEntryesRequestDto extends PagedRequestDto {
   keyword: string;
@@ -20,17 +21,28 @@ class PagedLogEntryesRequestDto extends PagedRequestDto {
   templateUrl: './logEntryes.component.html',
   animations: [appModuleAnimation()]
 })
-export class LogEntryesComponent extends PagedListingComponentBase<LogEntryDto> {
+export class LogEntryesComponent extends PagedListingComponentBase<LogEntryDto> implements OnInit {
   logEntryes: LogEntryDto[] = [];
   keyword = '';
   advancedFiltersVisible = false;
 
+  projectId;
+
   constructor(
     injector: Injector,
     private _logEntryesService: LogEntryServiceProxy,
+    private _activatedRoute: ActivatedRoute,
     private _modalService: BsModalService
   ) {
     super(injector);
+  }
+
+  ngOnInit(): void {
+    this._activatedRoute.params.subscribe((params: Params) => {
+      this.projectId = params['id'];
+      //console.log(this.projectId);
+      this.getDataPage(1);
+    });
   }
 
   list(
@@ -43,6 +55,7 @@ export class LogEntryesComponent extends PagedListingComponentBase<LogEntryDto> 
     this._logEntryesService
       .getAllPagedAndFiltered(
         request.keyword,
+        this.projectId,
         request.skipCount,
         request.maxResultCount
       )
@@ -71,7 +84,7 @@ export class LogEntryesComponent extends PagedListingComponentBase<LogEntryDto> 
                 this.refresh();
               })
             )
-            .subscribe(() => {});
+            .subscribe(() => { });
         }
       }
     );

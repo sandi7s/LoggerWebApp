@@ -37,8 +37,11 @@ namespace Logger.LogEntry
 
         public async Task<PagedResultDto<LogEntryDto>> GetAllPagedAndFiltered(PagedLogEntryResultRequestDto input)
         {
+            //var user = AbpSession.UserId;
             var logs = Repository.GetAll().Include(e => e.Project)
                 .WhereIf(!string.IsNullOrEmpty(input.Keyword), e => e.Log.Contains(input.Keyword))
+                .WhereIf(input.ProjectId != null, e => e.ProjectId == input.ProjectId)
+                .Where( e => e.CreatorUserId == AbpSession.UserId)
                 .ToList();
 
             var logsDtos = ObjectMapper.Map<List<LogEntryDto>>(logs);
