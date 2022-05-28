@@ -1,4 +1,5 @@
 ﻿using Abp.Domain.Entities;
+using Abp.Domain.Entities.Auditing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Logger.LogEntry
 {
-    public class LogEntry : Entity
+    public class LogEntry : FullAuditedEntity
     {
         public string Log { get; set; }
         public string Severity { get; set; }
