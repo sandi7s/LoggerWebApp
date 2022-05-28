@@ -13,5 +13,27 @@ namespace Logger.LogEntry.Dto
         public string Severity { get; set; }
         public DateTime TimeStamp { get; set; }
         public int ProjectId { get; set; }
+
+
+        public string getSeverityColorClass
+        {
+            get
+            {
+                if (Severity == "emerg" || Severity == "alert" || Severity == "crit" || Severity == "err" || Severity == "error")
+                {
+                    return "badge badge-danger";
+                }
+                else if (Severity == "warning")
+                {
+                    return "badge badge-warning";
+                }
+                else if (Severity == "notice" || Severity == "info")
+                {
+                    return "badge badge-info";
+                }
+
+                return "badge badge-secondary";
+            }
+        }
     }
 }

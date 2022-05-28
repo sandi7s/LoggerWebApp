@@ -16,6 +16,7 @@ using Logger.Editions;
 using Logger.MultiTenancy.Dto;
 using Logger.LogEntry.Dto;
 using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
 
 namespace Logger.LogEntry
 {
@@ -31,6 +32,22 @@ namespace Logger.LogEntry
             : base(repository)
         {
             
+        }
+
+        public async Task<PagedResultDto<LogEntryDto>> GetAllPagedAndFiltered(PagedLogEntryResultRequestDto input)
+        {
+            var logs = Repository.GetAll()
+                .WhereIf(!string.IsNullOrEmpty(input.Keyword), e => e.Log.Contains(input.Keyword))
+                .ToList();
+
+            var logsDtos = ObjectMapper.Map<List<LogEntryDto>>(logs);
+
+            var paged = logsDtos.AsQueryable().PageBy(input.SkipCount, input.MaxResultCount).ToList();
+
+            return new PagedResultDto<LogEntryDto>(
+                    logs.Count(),
+                    paged
+                );
         }
     }
 }

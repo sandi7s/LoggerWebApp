@@ -43,7 +43,7 @@ export class ProjectsComponent extends PagedListingComponentBase<ProjectDto> {
     request.keyword = this.keyword;
 
     this._projectsService
-      .getAll(
+      .getAllPagedAndFiltered(
         request.keyword,
         request.skipCount,
         request.maxResultCount
@@ -110,6 +110,7 @@ export class ProjectsComponent extends PagedListingComponentBase<ProjectDto> {
 
     createOrEditProjectDialog.content.onSave.subscribe(() => {
       this.refresh();
+      this.getDataPage(1);
     });
   }
 

@@ -41,7 +41,7 @@ export class LogEntryesComponent extends PagedListingComponentBase<LogEntryDto> 
     request.keyword = this.keyword;
 
     this._logEntryesService
-      .getAll(
+      .getAllPagedAndFiltered(
         request.keyword,
         request.skipCount,
         request.maxResultCount

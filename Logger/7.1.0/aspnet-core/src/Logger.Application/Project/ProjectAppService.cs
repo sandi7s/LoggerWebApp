@@ -1,8 +1,10 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Abp.Application.Services;
 using Abp.Application.Services.Dto;
 using Abp.Authorization;
+using Abp.Collections.Extensions;
 using Abp.Domain.Repositories;
 using Abp.Extensions;
 using Abp.IdentityFramework;
@@ -31,6 +33,23 @@ namespace Logger.Project
             : base(repository)
         {
             
+        }
+
+
+        public async Task<PagedResultDto<ProjectDto>> GetAllPagedAndFiltered(PagedProjectResultRequestDto input)
+        {
+            var projects = Repository.GetAll()
+                .WhereIf(!string.IsNullOrEmpty(input.Keyword), e => e.Name.Contains(input.Keyword) )
+                .ToList();
+
+            var projectsDtos = ObjectMapper.Map<List<ProjectDto>>(projects);
+
+            var paged = projectsDtos.AsQueryable().PageBy(input.SkipCount, input.MaxResultCount).ToList();
+
+            return new PagedResultDto<ProjectDto>(
+                    projects.Count(),
+                    paged
+                );
         }
     }
 }
