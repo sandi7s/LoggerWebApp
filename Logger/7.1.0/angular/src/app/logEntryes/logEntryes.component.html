@@ -16,6 +16,28 @@
     </section>
     <section class="content px-2">
         <div class="container-fluid">
+
+            <div class="card">
+
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-2" *ngFor="let stats of logStats">
+                            <div class="info-box {{stats.colorClass}}">
+                                <!-- <span class="info-box-icon {{stats.colorClass}} elevation-1">
+                                </span> -->
+                                <div class="info-box-content">
+                                    <span class="h5 info-box-text">{{stats.displayText}}:</span>
+                                    <span class="h5 info-box-number">
+                                        {{stats.count}}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
             <div class="card">
                 <div class="card-header">
                     <div class="row">

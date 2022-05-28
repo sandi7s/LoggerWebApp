@@ -21,15 +21,15 @@ namespace Logger.LogEntry.Dto
         {
             get
             {
-                if (Severity == "emerg" || Severity == "alert" || Severity == "crit" || Severity == "err" || Severity == "error")
+                if (Severity == SeverityEnum.emerg.ToString() || Severity == SeverityEnum.alert.ToString() || Severity == SeverityEnum.crit.ToString() || Severity == SeverityEnum.err.ToString() )
                 {
                     return "badge badge-danger";
                 }
-                else if (Severity == "warning")
+                else if (Severity == SeverityEnum.warning.ToString())
                 {
                     return "badge badge-warning";
                 }
-                else if (Severity == "notice" || Severity == "info")
+                else if (Severity == SeverityEnum.notice.ToString() || Severity == SeverityEnum.info.ToString())
                 {
                     return "badge badge-info";
                 }

@@ -10,6 +10,7 @@ import {
   LogEntryDtoPagedResultDto,
   LogEntryDto,
   LogEntryServiceProxy,
+  LogStats,
 } from '@shared/service-proxies/service-proxies';
 import { ActivatedRoute, Params } from '@angular/router';
 
@@ -28,6 +29,8 @@ export class LogEntryesComponent extends PagedListingComponentBase<LogEntryDto> 
 
   projectId;
 
+  logStats: LogStats[] = [];
+
   constructor(
     injector: Injector,
     private _logEntryesService: LogEntryServiceProxy,
@@ -42,6 +45,7 @@ export class LogEntryesComponent extends PagedListingComponentBase<LogEntryDto> 
       this.projectId = params['id'];
       //console.log(this.projectId);
       this.getDataPage(1);
+      this.getStats();
     });
   }
 
@@ -93,5 +97,20 @@ export class LogEntryesComponent extends PagedListingComponentBase<LogEntryDto> 
   clearFilters(): void {
     this.keyword = '';
     this.getDataPage(1);
+  }
+
+  getStats() {
+    this._logEntryesService
+      .getStatsAllStats(
+        this.projectId
+      )
+      .pipe(
+        finalize(() => {
+          //finishedCallback();
+        })
+      )
+      .subscribe((result: LogStats[]) => {
+        this.logStats = result;
+      });
   }
 }

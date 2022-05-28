@@ -89,6 +89,23 @@
         </div>
       </div>
       <div class="row">
+        <div class="col-12 mb-2 mt-4">
+          <h2>Logs statistics:</h2>
+        </div>
+        <div class="col-lg-2" *ngFor="let stats of logStats">
+            <div class="info-box {{stats.colorClass}}">
+                <!-- <span class="info-box-icon {{stats.colorClass}} elevation-1">
+                </span> -->
+                <div class="info-box-content">
+                    <span class="h5 info-box-text">{{stats.displayText}}:</span>
+                    <span class="h5 info-box-number">
+                        {{stats.count}}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+      <!-- <div class="row">
         <div class="col-12 col-sm-6 col-md-3">
           <div class="info-box">
             <span class="info-box-icon bg-primary elevation-1">
@@ -290,7 +307,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </section>
 </div>

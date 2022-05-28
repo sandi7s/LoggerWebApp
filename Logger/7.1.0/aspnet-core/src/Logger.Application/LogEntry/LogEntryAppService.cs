@@ -18,6 +18,7 @@ using Logger.LogEntry.Dto;
 using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace Logger.LogEntry
 {
@@ -52,6 +53,81 @@ namespace Logger.LogEntry
                     logs.Count(),
                     paged
                 );
+        }
+
+        private async Task<LogStats> GetStatsLastDay(int? projectId)
+        {
+            var logs = Repository.GetAll()
+                .Where(e => e.TimeStamp > DateTime.UtcNow.AddDays(-1))
+                .WhereIf(projectId != null, e => e.ProjectId == projectId)
+                .Where(e => e.CreatorUserId == AbpSession.UserId)
+                .ToList();
+
+            return new LogStats("Last 24h", logs.Count, "bg-success");
+        }
+        private async Task<LogStats> GetStatsLastHour(int? projectId)
+        {
+            var logs = Repository.GetAll()
+                .Where(e => e.TimeStamp > DateTime.UtcNow.AddHours(-1))
+                .WhereIf(projectId != null, e => e.ProjectId == projectId)
+                .Where(e => e.CreatorUserId == AbpSession.UserId)
+                .ToList();
+
+            return new LogStats("Last hour", logs.Count, "bg-success");
+        }
+
+        private async Task<List<LogStats>> GetStatsForEachSeverity(int? projectId)
+        {
+            var severityes = Enum.GetValues(typeof(SeverityEnum))
+                .Cast<SeverityEnum>()
+                .Select(severityEnum => new LogStats
+                {
+                    DisplayText = severityEnum.ToString(),
+                    Count = 0,
+                    ColorClass = GetSeverityColorForStats(severityEnum.ToString())
+                }).ToList();
+
+            foreach (var item in severityes)
+            {
+                var logs = Repository.GetAll()
+                .WhereIf(projectId != null, e => e.ProjectId == projectId)
+                .Where(e => e.Severity == item.DisplayText)
+                .Where(e => e.CreatorUserId == AbpSession.UserId)
+                .ToList();
+
+                item.Count = logs.Count;
+            }
+
+            return severityes;
+        }
+
+        public async Task<List<LogStats>> GetStatsAllStats(int? projectId)
+        {
+            List<LogStats> statList = new List<LogStats>();
+
+            statList.Add(await GetStatsLastDay(projectId));
+            statList.Add(await GetStatsLastHour(projectId));
+            statList.AddRange(await GetStatsForEachSeverity(projectId));
+
+            return statList;
+        }
+
+        private string GetSeverityColorForStats(string severity)
+        {
+            if (severity == SeverityEnum.emerg.ToString() || severity == SeverityEnum.alert.ToString() || severity == SeverityEnum.crit.ToString() || severity == SeverityEnum.err.ToString())
+            {
+                return "bg-danger";
+            }
+            else if (severity == SeverityEnum.warning.ToString())
+            {
+                return "bg-warning";
+            }
+            else if (severity == SeverityEnum.notice.ToString() || severity == SeverityEnum.info.ToString())
+            {
+                return "bg-info";
+            }
+
+            return "bg-secondary";
         }
     }
 }
