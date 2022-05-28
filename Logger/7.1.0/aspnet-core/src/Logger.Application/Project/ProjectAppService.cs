@@ -15,6 +15,7 @@ using Logger.Authorization;
 using Logger.Authorization.Roles;
 using Logger.Authorization.Users;
 using Logger.Editions;
+using Logger.LogEntry.Dto;
 using Logger.MultiTenancy.Dto;
 using Logger.Project.Dto;
 using Microsoft.AspNetCore.Identity;
@@ -24,15 +25,16 @@ namespace Logger.Project
     [AbpAuthorize(PermissionNames.Pages_Projects)]
     public class ProjectAppService : AsyncCrudAppService<Project, ProjectDto, int, PagedProjectResultRequestDto, CreateProjectDto, ProjectDto>, IProjectAppService
     {
-        //private readonly IAbpZeroDbMigrator _abpZeroDbMigrator;
+        private readonly IRepository<LogEntry.LogEntry, int> _logEntryRepository;
 
         public ProjectAppService(
-            IRepository<Project, int> repository
+            IRepository<Project, int> repository,
+            IRepository<LogEntry.LogEntry, int> logEntryRepository
             //IAbpZeroDbMigrator abpZeroDbMigrator
             )
             : base(repository)
         {
-            
+            _logEntryRepository = logEntryRepository;
         }
 
 
@@ -51,6 +53,48 @@ namespace Logger.Project
                     projects.Count(),
                     paged
                 );
+        }
+
+        public async Task<List<ProjectDto>> GetAllForFrontPage()
+        {
+            var projects = Repository.GetAll()
+                .Where(e => e.CreatorUserId == AbpSession.UserId)
+                .ToList();
+
+            var projectsDtos = ObjectMapper.Map<List<ProjectDto>>(projects);
+
+            foreach (var item in projectsDtos)
+            {
+                var lastLog = _logEntryRepository.GetAll().Where(e => e.ProjectId == item.Id && e.CreatorUserId == AbpSession.UserId).OrderByDescending(e => e.TimeStamp).FirstOrDefault();
+
+                if (lastLog != null)
+                {
+                    item.LastLogEntryColor = GetSeverityColorForStats(lastLog.Severity.ToString());
+                }
+                else
+                {
+                    item.LastLogEntryColor = "bg-secondary";
+                }
+            }
+
+            return projectsDtos;
+        }
+        private string GetSeverityColorForStats(string severity)
+        {
+            if (severity == SeverityEnum.emerg.ToString() || severity == SeverityEnum.alert.ToString() || severity == SeverityEnum.crit.ToString() || severity == SeverityEnum.err.ToString())
+            {
+                return "bg-danger";
+            }
+            else if (severity == SeverityEnum.warning.ToString())
+            {
+                return "bg-warning";
+            }
+            else if (severity == SeverityEnum.notice.ToString() || severity == SeverityEnum.info.ToString())
+            {
+                return "bg-info";
+            }
+
+            return "bg-secondary";
         }
     }
 }

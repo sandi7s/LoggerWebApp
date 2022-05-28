@@ -43,6 +43,7 @@ namespace Logger.LogEntry
                 .WhereIf(!string.IsNullOrEmpty(input.Keyword), e => e.Log.Contains(input.Keyword))
                 .WhereIf(input.ProjectId != null, e => e.ProjectId == input.ProjectId)
                 .Where( e => e.CreatorUserId == AbpSession.UserId)
+                .OrderByDescending(e => e.TimeStamp)
                 .ToList();
 
             var logsDtos = ObjectMapper.Map<List<LogEntryDto>>(logs);

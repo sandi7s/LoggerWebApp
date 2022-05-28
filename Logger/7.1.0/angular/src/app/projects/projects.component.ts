@@ -13,6 +13,7 @@ import {
 } from '@shared/service-proxies/service-proxies';
 import { CreateProjectDialogComponent } from './create-project/create-project-dialog.component';
 import { EditProjectDialogComponent } from './edit-project/edit-project-dialog.component';
+import { Router } from '@angular/router';
 
 class PagedProjectsRequestDto extends PagedRequestDto {
   keyword: string;
@@ -30,7 +31,8 @@ export class ProjectsComponent extends PagedListingComponentBase<ProjectDto> {
   constructor(
     injector: Injector,
     private _projectsService: ProjectServiceProxy,
-    private _modalService: BsModalService
+    private _modalService: BsModalService,
+    private _router: Router
   ) {
     super(injector);
   }
@@ -57,6 +59,10 @@ export class ProjectsComponent extends PagedListingComponentBase<ProjectDto> {
         this.projects = result.items;
         this.showPaging(result, pageNumber);
       });
+  }
+
+  goToProject(id: number){
+    this._router.navigate(['/app/logEntryes', id]);
   }
 
   delete(project: ProjectDto): void {
