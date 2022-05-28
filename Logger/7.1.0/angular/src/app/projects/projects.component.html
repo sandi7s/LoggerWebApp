@@ -51,6 +51,7 @@
                                 <th>{{ "Id" | localize }}</th>
                                 <th>{{ "Name" | localize }}</th>
                                 <th>{{ "Url" | localize }}</th>
+                                <th class="text-center">{{ "ShowOnFrontPage" | localize }}</th>
                                 <th>{{ "Actions" | localize }}</th>
                             </tr>
                             </thead>
@@ -74,6 +75,10 @@
                                 </td>
                                 <td>{{ project.name }}</td>
                                 <td>{{ project.url }}</td>
+                                <td>
+                                    <div *ngIf="project.showOnFrontPage" class="text-center"><i class="fa fa-check-circle text-success" title="True"></i></div>
+									<div *ngIf="!project.showOnFrontPage" class="text-center"><i class="fa fa-times-circle" title="False"></i></div>
+                                </td>
                                 <td>
                                     <button type="button" class="btn btn-sm bg-secondary"
                                             (click)="editProject(project)">

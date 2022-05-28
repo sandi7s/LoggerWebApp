@@ -3054,6 +3054,7 @@ export interface ICreateLogEntryDto {
 export class CreateProjectDto implements ICreateProjectDto {
     name: string | undefined;
     url: string | undefined;
+    showOnFrontPage: boolean;
 
     constructor(data?: ICreateProjectDto) {
         if (data) {
@@ -3068,6 +3069,7 @@ export class CreateProjectDto implements ICreateProjectDto {
         if (_data) {
             this.name = _data["name"];
             this.url = _data["url"];
+            this.showOnFrontPage = _data["showOnFrontPage"];
         }
     }
 
@@ -3082,6 +3084,7 @@ export class CreateProjectDto implements ICreateProjectDto {
         data = typeof data === 'object' ? data : {};
         data["name"] = this.name;
         data["url"] = this.url;
+        data["showOnFrontPage"] = this.showOnFrontPage;
         return data; 
     }
 
@@ -3096,6 +3099,7 @@ export class CreateProjectDto implements ICreateProjectDto {
 export interface ICreateProjectDto {
     name: string | undefined;
     url: string | undefined;
+    showOnFrontPage: boolean;
 }
 
 export class CreateRoleDto implements ICreateRoleDto {
@@ -4037,6 +4041,7 @@ export class ProjectDto implements IProjectDto {
     id: number;
     name: string | undefined;
     url: string | undefined;
+    showOnFrontPage: boolean;
     lastLogEntryColor: string | undefined;
 
     constructor(data?: IProjectDto) {
@@ -4053,6 +4058,7 @@ export class ProjectDto implements IProjectDto {
             this.id = _data["id"];
             this.name = _data["name"];
             this.url = _data["url"];
+            this.showOnFrontPage = _data["showOnFrontPage"];
             this.lastLogEntryColor = _data["lastLogEntryColor"];
         }
     }
@@ -4069,6 +4075,7 @@ export class ProjectDto implements IProjectDto {
         data["id"] = this.id;
         data["name"] = this.name;
         data["url"] = this.url;
+        data["showOnFrontPage"] = this.showOnFrontPage;
         data["lastLogEntryColor"] = this.lastLogEntryColor;
         return data; 
     }
@@ -4085,6 +4092,7 @@ export interface IProjectDto {
     id: number;
     name: string | undefined;
     url: string | undefined;
+    showOnFrontPage: boolean;
     lastLogEntryColor: string | undefined;
 }
 

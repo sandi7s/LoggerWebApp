@@ -25,11 +25,9 @@ namespace Logger.LogEntry
     [AbpAuthorize(PermissionNames.Pages_LogEntryes)]
     public class LogEntryAppService : AsyncCrudAppService<LogEntry, LogEntryDto, int, PagedLogEntryResultRequestDto, CreateLogEntryDto, LogEntryDto>, ILogEntryAppService
     {
-        //private readonly IAbpZeroDbMigrator _abpZeroDbMigrator;
 
         public LogEntryAppService(
             IRepository<LogEntry, int> repository
-            //IAbpZeroDbMigrator abpZeroDbMigrator
             )
             : base(repository)
         {

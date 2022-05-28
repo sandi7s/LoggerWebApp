@@ -10,6 +10,10 @@ namespace Logger.Project.Dto
     {
         public string Name { get; set; }
         public string Url { get; set; }
+
+        public bool ShowOnFrontPage { get; set; }
+
+
         public string LastLogEntryColor { get; set; }
     }
 }

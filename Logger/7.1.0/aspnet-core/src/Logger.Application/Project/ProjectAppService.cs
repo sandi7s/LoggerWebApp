@@ -30,7 +30,6 @@ namespace Logger.Project
         public ProjectAppService(
             IRepository<Project, int> repository,
             IRepository<LogEntry.LogEntry, int> logEntryRepository
-            //IAbpZeroDbMigrator abpZeroDbMigrator
             )
             : base(repository)
         {
@@ -58,11 +57,12 @@ namespace Logger.Project
         public async Task<List<ProjectDto>> GetAllForFrontPage()
         {
             var projects = Repository.GetAll()
-                .Where(e => e.CreatorUserId == AbpSession.UserId)
+                .Where(e => e.CreatorUserId == AbpSession.UserId && e.ShowOnFrontPage)
                 .ToList();
 
             var projectsDtos = ObjectMapper.Map<List<ProjectDto>>(projects);
 
+            //get class of last log on project
             foreach (var item in projectsDtos)
             {
                 var lastLog = _logEntryRepository.GetAll().Where(e => e.ProjectId == item.Id && e.CreatorUserId == AbpSession.UserId).OrderByDescending(e => e.TimeStamp).FirstOrDefault();
