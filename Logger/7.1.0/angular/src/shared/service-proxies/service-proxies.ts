@@ -3629,6 +3629,7 @@ export class LogEntryDto implements ILogEntryDto {
     severity: string | undefined;
     timeStamp: moment.Moment;
     projectId: number;
+    project: ProjectDto;
     readonly getSeverityColorClass: string | undefined;
 
     constructor(data?: ILogEntryDto) {
@@ -3647,6 +3648,7 @@ export class LogEntryDto implements ILogEntryDto {
             this.severity = _data["severity"];
             this.timeStamp = _data["timeStamp"] ? moment(_data["timeStamp"].toString()) : <any>undefined;
             this.projectId = _data["projectId"];
+            this.project = _data["project"] ? ProjectDto.fromJS(_data["project"]) : <any>undefined;
             (<any>this).getSeverityColorClass = _data["getSeverityColorClass"];
         }
     }
@@ -3665,6 +3667,7 @@ export class LogEntryDto implements ILogEntryDto {
         data["severity"] = this.severity;
         data["timeStamp"] = this.timeStamp ? this.timeStamp.toISOString() : <any>undefined;
         data["projectId"] = this.projectId;
+        data["project"] = this.project ? this.project.toJSON() : <any>undefined;
         data["getSeverityColorClass"] = this.getSeverityColorClass;
         return data; 
     }
@@ -3683,6 +3686,7 @@ export interface ILogEntryDto {
     severity: string | undefined;
     timeStamp: moment.Moment;
     projectId: number;
+    project: ProjectDto;
     getSeverityColorClass: string | undefined;
 }
 

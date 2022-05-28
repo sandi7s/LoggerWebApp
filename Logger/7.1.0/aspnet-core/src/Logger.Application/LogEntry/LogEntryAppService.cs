@@ -17,6 +17,7 @@ using Logger.MultiTenancy.Dto;
 using Logger.LogEntry.Dto;
 using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace Logger.LogEntry
 {
@@ -36,7 +37,7 @@ namespace Logger.LogEntry
 
         public async Task<PagedResultDto<LogEntryDto>> GetAllPagedAndFiltered(PagedLogEntryResultRequestDto input)
         {
-            var logs = Repository.GetAll()
+            var logs = Repository.GetAll().Include(e => e.Project)
                 .WhereIf(!string.IsNullOrEmpty(input.Keyword), e => e.Log.Contains(input.Keyword))
                 .ToList();
 

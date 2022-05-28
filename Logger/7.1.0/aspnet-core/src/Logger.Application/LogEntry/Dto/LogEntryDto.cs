@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using Abp.Application.Services.Dto;
 using Abp.AutoMapper;
 using Abp.MultiTenancy;
+using Logger.Project.Dto;
 
 namespace Logger.LogEntry.Dto
 {
@@ -13,6 +14,7 @@ namespace Logger.LogEntry.Dto
         public string Severity { get; set; }
         public DateTime TimeStamp { get; set; }
         public int ProjectId { get; set; }
+        public ProjectDto Project { get; set; }
 
 
         public string getSeverityColorClass
