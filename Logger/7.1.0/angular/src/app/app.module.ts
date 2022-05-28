@@ -41,6 +41,7 @@ import { SidebarLogoComponent } from './layout/sidebar-logo.component';
 import { SidebarUserPanelComponent } from './layout/sidebar-user-panel.component';
 import { SidebarMenuComponent } from './layout/sidebar-menu.component';
 import { ProjectsComponent } from './projects/projects.component';
+import { LogEntryesComponent } from './logEntryes/logEntryes.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,8 @@ import { ProjectsComponent } from './projects/projects.component';
     ProjectsComponent,
     CreateProjectDialogComponent,
     EditProjectDialogComponent,
+    //logEntryes
+    LogEntryesComponent,
     // roles
     RolesComponent,
     CreateRoleDialogComponent,

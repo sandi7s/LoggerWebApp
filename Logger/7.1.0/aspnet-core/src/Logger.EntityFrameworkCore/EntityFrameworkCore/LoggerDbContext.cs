@@ -10,6 +10,7 @@ namespace Logger.EntityFrameworkCore
     {
         /* Define a DbSet for each entity of the application */
         public virtual DbSet<Project.Project> Project { get; set; }
+        public virtual DbSet<LogEntry.LogEntry> LogEntry { get; set; }
 
         public LoggerDbContext(DbContextOptions<LoggerDbContext> options)
             : base(options)
