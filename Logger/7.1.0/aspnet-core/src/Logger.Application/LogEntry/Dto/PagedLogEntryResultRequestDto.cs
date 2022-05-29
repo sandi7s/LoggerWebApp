@@ -6,6 +6,8 @@ namespace Logger.LogEntry.Dto
     {
         public string Keyword { get; set; }
         public int? ProjectId { get; set; }
+
+        public string Sorting { get; set; }
     }
 }
 

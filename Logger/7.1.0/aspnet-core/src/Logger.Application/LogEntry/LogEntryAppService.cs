@@ -36,13 +36,35 @@ namespace Logger.LogEntry
 
         public async Task<PagedResultDto<LogEntryDto>> GetAllPagedAndFiltered(PagedLogEntryResultRequestDto input)
         {
+            input.Sorting = input.Sorting.ToLower();
+            Func<LogEntry, Object> orderByFunc = null;
+            if (input.Sorting.Contains("id"))
+            {
+                orderByFunc = item => item.Id;
+            }
+            else if (input.Sorting.Contains("timestamp"))
+            {
+                orderByFunc = item => item.TimeStamp;
+            }
+
+            //var prop = typeof(LogEntry).GetProperty(input.Sorting);
             //var user = AbpSession.UserId;
             var logs = Repository.GetAll().Include(e => e.Project)
                 .WhereIf(!string.IsNullOrEmpty(input.Keyword), e => e.Log.Contains(input.Keyword))
                 .WhereIf(input.ProjectId != null, e => e.ProjectId == input.ProjectId)
                 .Where( e => e.CreatorUserId == AbpSession.UserId)
-                .OrderByDescending(e => e.TimeStamp)
+                //.OrderBy(e => prop.GetValue(e, null))
+                //.OrderByDescending(e => e.TimeStamp)
                 .ToList();
+
+            if (input.Sorting.Contains("desc"))
+            {
+                logs = logs.OrderByDescending(orderByFunc).ToList();
+            }
+            else
+            {
+                logs = logs.OrderBy(orderByFunc).ToList();
+            }
 
             var logsDtos = ObjectMapper.Map<List<LogEntryDto>>(logs);
 

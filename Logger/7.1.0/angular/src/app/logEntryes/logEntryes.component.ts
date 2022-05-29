@@ -28,6 +28,7 @@ export class LogEntryesComponent extends PagedListingComponentBase<LogEntryDto> 
   advancedFiltersVisible = false;
 
   projectId;
+  sorting: string = "timestamp desc";
 
   logStats: LogStats[] = [];
 
@@ -60,6 +61,7 @@ export class LogEntryesComponent extends PagedListingComponentBase<LogEntryDto> 
       .getAllPagedAndFiltered(
         request.keyword,
         this.projectId,
+        this.sorting,
         request.skipCount,
         request.maxResultCount
       )

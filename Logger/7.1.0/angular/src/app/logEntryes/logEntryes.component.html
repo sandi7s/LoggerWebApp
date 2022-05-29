@@ -61,7 +61,8 @@
                         <table class="table table-striped table-bordered" [busy]="isTableLoading">
                             <thead class="bg-light">
                                 <tr>
-                                    <th>{{ "Log" | localize }}</th>
+                                    <!-- <th >{{ "Id" | localize }}</th> -->
+                                    <th >{{ "Log" | localize }}</th>
                                     <th>{{ "Severity" | localize }}</th>
                                     <th>{{ "Timestamp" | localize }}</th>
                                     <th>{{ "Project" | localize }}</th>
@@ -78,6 +79,7 @@
                           totalItems: totalItems
                         }
                 ">
+                                    <!-- <td>{{ logEntry.id }}</td> -->
                                     <td>{{ logEntry.log }}</td>
                                     <td>
                                         <span class="{{logEntry.getSeverityColorClass}} mx-1">

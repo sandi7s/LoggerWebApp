@@ -2,7 +2,7 @@
     <abp-modal-header [title]="'CreateNewProject' | localize" (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
     <div class="modal-body">
 
-        
+
         <div class="form-group row">
             <label class="col-md-3 col-form-label" for="name">
                 {{ "Name" | localize }}
@@ -26,21 +26,16 @@
         </div>
         <div class="form-group row">
             <label class="col-md-3 col-form-label">
-              {{ "ShowOnFrontPage" | localize }}
+                {{ "ShowOnFrontPage" | localize }}
             </label>
             <div class="col-md-9">
-              <div class="custom-control custom-checkbox">
-                <input
-                  type="checkbox"
-                  class="custom-control-input"
-                  name="showOnFrontPage"
-                  id="showOnFrontPage"
-                  [(ngModel)]="project.showOnFrontPage"
-                />
-                <label class="custom-control-label mt-2" for="showOnFrontPage"></label>
-              </div>
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" name="showOnFrontPage" id="showOnFrontPage"
+                        [(ngModel)]="project.showOnFrontPage" />
+                    <label class="custom-control-label mt-2" for="showOnFrontPage"></label>
+                </div>
             </div>
-          </div>
+        </div>
 
     </div>
     <abp-modal-footer [cancelDisabled]="saving" [saveDisabled]="!createProjectForm.form.valid || saving"
