@@ -41,8 +41,11 @@
             <div class="card">
                 <div class="card-header">
                     <div class="row">
-                        <div class="col-md-6">&emsp;</div>
+                        <!-- <div class="col-md-1">
+                            <label for="sorting">{{l("SortBy")}}: </label>
+                        </div> -->
                         <div class="col-md-6">
+                            <label for="sorting">{{l("Search")}}: </label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <button type="button" class="btn bg-blue" (click)="getDataPage(1)">
@@ -50,8 +53,23 @@
                                     </button>
                                 </div>
                                 <input type="text" class="form-control" name="keyword"
-                                    [placeholder]="'SearchWithThreeDot' | localize" [(ngModel)]="keyword"
+                                    [placeholder]="" [(ngModel)]="keyword"
                                     (keyup.enter)="getDataPage(1)" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group m-form__group">
+                                <label for="sorting">Sort By: </label>
+                                <select name="sorting" [(ngModel)]="sorting" class="form-control" (change)="getDataPage(1)">
+                                    <option value="id">id</option>
+                                    <option value="id desc">id desc</option>
+                                    <option value="timestamp">tempstamp</option>
+                                    <option value="timestamp desc">tempstamp desc</option>
+                                    <!-- <option value="log">log</option>
+                                    <option value="log desc">log desc</option>
+                                    <option value="severity">severity</option>
+                                    <option value="severity desc">severity desc</option> -->
+                                </select>
                             </div>
                         </div>
                     </div>
