@@ -14,6 +14,7 @@ namespace Logger.LogEntry
         //Task<LogStats> GetStatsLastHour(int? projectId);
         //Task<List<LogStats>> GetStatsForEachSeverity(int? projectId);
         Task<List<LogStats>> GetStatsAllStats(int? projectId);
+        Task<byte[]> CreateExcelLogs(PagedLogEntryResultRequestDto input);
     }
 }
 

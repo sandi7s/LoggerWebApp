@@ -12,6 +12,9 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="NPOI" Version="2.5.6" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Logger.Core\Logger.Core.csproj" />
   </ItemGroup>
 </Project>

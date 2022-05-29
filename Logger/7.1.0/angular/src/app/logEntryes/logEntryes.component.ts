@@ -11,6 +11,7 @@ import {
   LogEntryDto,
   LogEntryServiceProxy,
   LogStats,
+  PagedLogEntryResultRequestDto,
 } from '@shared/service-proxies/service-proxies';
 import { ActivatedRoute, Params } from '@angular/router';
 
@@ -115,4 +116,54 @@ export class LogEntryesComponent extends PagedListingComponentBase<LogEntryDto> 
         this.logStats = result;
       });
   }
+
+
+  excellExport() {
+    let input = new PagedLogEntryResultRequestDto();
+    input.keyword = this.keyword;
+    input.projectId = this.projectId;
+    input.sorting = this.sorting;
+
+    this._logEntryesService
+        .createExcelLogs(
+          input
+        )
+        .pipe(
+            finalize(() => {
+                //finishedCallback();
+            })
+        )
+        .subscribe((result) => {
+            this.downloadFile(result);
+        });
+}
+
+_base64ToArrayBuffer(base64) {
+    var binary_string = window.atob(base64);
+    var len = binary_string.length;
+    var bytes = new Uint8Array(len);
+    for (var i = 0; i < len; i++) {
+        bytes[i] = binary_string.charCodeAt(i);
+    }
+    return bytes.buffer;
+}
+
+downloadFile(result) {
+    let bytes = this._base64ToArrayBuffer(result);
+    let file = new Blob([bytes], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;' });
+    var fileUrl = URL.createObjectURL(file);
+    //window.open(fileUrl,"_blank");
+    //window.open(fileUrl,);
+    //window.location.assign(fileUrl);
+    //URL.revokeObjectURL(fileUrl);
+    
+    let link = document.createElement('a');
+    link.href = fileUrl;
+    link.download = this.projectId;
+    document.body.appendChild(link);
+    link.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
+    link.remove();
+    window.URL.revokeObjectURL(link.href);
+    document.body.removeChild(link);
+}
 }

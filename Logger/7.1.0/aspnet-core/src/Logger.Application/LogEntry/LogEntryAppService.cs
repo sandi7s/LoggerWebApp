@@ -19,6 +19,8 @@ using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using System;
+using NPOI.XSSF.UserModel;
+using System.IO;
 
 namespace Logger.LogEntry
 {
@@ -149,6 +151,55 @@ namespace Logger.LogEntry
             }
 
             return "bg-secondary";
+        }
+
+        public async Task<byte[]> CreateExcelLogs(PagedLogEntryResultRequestDto input)
+        {
+            input.Keyword = null;
+            input.SkipCount = 0;
+            input.MaxResultCount = int.MaxValue;
+
+            var pagedData = await GetAllPagedAndFiltered(input);
+
+            var memoryStream = new MemoryStream();
+            //var file = new FileDto(fileName, MimeTypeNames.ApplicationVndOpenxmlformatsOfficedocumentSpreadsheetmlSheet);
+            var workbook = new XSSFWorkbook();
+            var excelSheet = workbook.CreateSheet(pagedData.Items[0].Project.Name);
+
+            var headerStyle = workbook.CreateCellStyle();
+            var font = workbook.CreateFont();
+            font.IsBold = true;
+            headerStyle.SetFont(font);
+
+            var headerRow = excelSheet.CreateRow(0);
+            headerRow.RowStyle = headerStyle;
+
+            var cell1 = headerRow.CreateCell(0);
+            cell1.SetCellValue("Log");
+            cell1.CellStyle = headerStyle;
+
+            var cell2 = headerRow.CreateCell(1);
+            cell2.SetCellValue("Severity");
+            cell2.CellStyle = headerStyle;
+
+            var cell3 = headerRow.CreateCell(2);
+            cell3.SetCellValue("Timestamp");
+            cell3.CellStyle = headerStyle;
+            //headerRow.CreateCell(3).SetCellValue("Project");
+
+            for (int i = 0; i < pagedData.Items.Count; i++)
+            {
+                var row = excelSheet.CreateRow(i+1);
+
+                row.CreateCell(0).SetCellValue(pagedData.Items[i].Log);
+                row.CreateCell(1).SetCellValue(pagedData.Items[i].Severity);
+                row.CreateCell(2).SetCellValue(pagedData.Items[i].TimeStamp.ToString("dd/MM/yyyy HH:mm:ss"));
+                //row.CreateCell(3).SetCellValue(pagedData.Items[i].Project.Name);
+            }
+
+            workbook.Write(memoryStream);
+
+            return memoryStream.ToArray();
         }
     }
 }
