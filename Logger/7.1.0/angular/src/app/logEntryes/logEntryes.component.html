@@ -87,7 +87,7 @@
                                     <th >{{ "Log" | localize }}</th>
                                     <th>{{ "Severity" | localize }}</th>
                                     <th>{{ "Timestamp" | localize }}</th>
-                                    <th>{{ "Project" | localize }}</th>
+                                    <th *ngIf="!projectId">{{ "Project" | localize }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -109,7 +109,7 @@
                                         </span>
                                     </td>
                                     <td>{{ logEntry.timeStamp | date:'MM/dd/yyyy, hh:mm a' }}</td>
-                                    <td>{{ logEntry.project.name }}</td>
+                                    <td *ngIf="!projectId">{{ logEntry.project.name }}</td>
 
                                 </tr>
                             </tbody>
